@@ -83,7 +83,7 @@ class _otpVerifyState extends State<otpVerify> {
                         }
 
                         return null;
-                      },
+                      }, 
                     ),
                   ),
                   Row(
