@@ -76,37 +76,47 @@ class _otpVerifyState extends State<otpVerify> {
                     child: TextFormField(
                       controller: _otp,
                       keyboardType: TextInputType.text,
-                      decoration: buildInputDecoration(Icons.lock, "Password"),
+                      decoration: buildInputDecoration(Icons.lock, "Otp"),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter password";
+                          return "Please enter otp";
                         }
 
                         return null;
                       },
                     ),
                   ),
-                  SizedBox(
-                    width: 200,
-                    height: 50,
-                    child: RaisedButton(
-                      color: Colors.redAccent,
-                      onPressed: () {
-                        if (_formkey.currentState!.validate()) {
-                          registrationUser();
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: ElevatedButton(
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23),
+                          ),
+                          onPressed: () {
+                            if (_formkey.currentState!.validate()) {
+                             verifyUser();
 
-                          print("Successful");
-                        } else {
-                          print("Unsuccessfull");
-                        }
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                          side: const BorderSide(color: Colors.blue, width: 2)),
-                      textColor: Colors.white,
-                      child: const Text("Submit"),
-                    ),
-                  )
+                              print("Successful");
+                            } else {
+                              print("Unsuccessfull");
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.deepOrange,
+                              //  fixedSize: const Size(50, 100),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50))),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -116,7 +126,7 @@ class _otpVerifyState extends State<otpVerify> {
     );
   }
 
-  Future registrationUser() async {
+  Future verifyUser() async {
     // ignore: non_constant_identifier_names
     var apiUrl = "http://192.168.0.121:9010/api/otp-verify";
 
