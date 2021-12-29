@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ecalldoc/screens/login.dart';
 import 'package:ecalldoc/screens/otp_verify.dart';
 import 'package:flutter/material.dart';
@@ -11,35 +13,19 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
-  TextEditingController _name = TextEditingController();
+  final TextEditingController _name = TextEditingController();
 
-  TextEditingController _phone = TextEditingController();
-  TextEditingController _password = TextEditingController();
-  TextEditingController _confirmpassword = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _confirmpassword = TextEditingController();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-  final items = [
-    'Cardiology',
-    'Orthopedics-Paediatric',
-    'Microbiology',
-    'General Surgery',
-    'Gastroenterology',
-    'Electrophysiology',
-    'Gastroenterology',
-    'Uro Oncology',
-    'Diabetology',
-    'Endocrinology',
-    'Neurosurgery',
-    'Interventional Radiology',
-    'Spine Surgery',
-    'Haemato Oncology',
-    'Head Neck Surgery Oncology',
-    'Radiation Oncology',
-    'NICU PICU',
-    'Surgical Oncology'
-  ];
-  String? value;
+  String? _mySelection;
+
+  final String url = "http://192.168.0.121:9010/api/getdepartment";
+
+  List data = [];
 
   @override
   Widget build(BuildContext context) {
@@ -125,18 +111,28 @@ class _RegistrationState extends State<Registration> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.purple, width: 2)),
-                    child: DropdownButton(
-                        value: value,
-                        iconSize: 35,
-                        icon: const Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.black,
-                        ),
-                        isExpanded: true,
-                        items: items.map(buildValueItems).toList(),
-                        onChanged: (value) {
-                          setState(() => this.value = value as String?);
-                        }),
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      child: DropdownButton(
+                        items: data.map((item) {
+                          return DropdownMenuItem(
+                            child: Text(
+                              item['name'],
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            value: item['Dept_ID'].toString(),
+                          );
+                        }).toList(),
+                        onChanged: (String? newVal) {
+                          setState(() {
+                            _mySelection = newVal;
+                          });
+                        },
+                        value: _mySelection,
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -196,6 +192,7 @@ class _RegistrationState extends State<Registration> {
                           onPressed: () {
                             if (_formkey.currentState!.validate()) {
                               registrationUser();
+                              dropDownApi();
 
                               print("Successful");
                             } else {
@@ -266,7 +263,8 @@ class _RegistrationState extends State<Registration> {
       'username': _name.text,
       'phone': _phone.text,
       'password': _password.text,
-      'usertype': "1"
+      'usertype': "1",
+      'department': _mySelection
     };
 
     var datas = await http.post(Uri.parse(apiUrl), body: mapeddate);
@@ -280,5 +278,25 @@ class _RegistrationState extends State<Registration> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => otpVerify()));
     }
+  }
+
+  Future<String> dropDownApi() async {
+    var res =
+        await http.get(Uri.parse(url), headers: {"Accept": "application/json"});
+    var resBody = json.decode(res.body);
+
+    setState(() {
+      data = resBody;
+    });
+
+    print(resBody);
+
+    return "Sucess";
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dropDownApi();
   }
 }

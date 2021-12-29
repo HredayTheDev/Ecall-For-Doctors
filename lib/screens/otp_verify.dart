@@ -10,8 +10,8 @@ class otpVerify extends StatefulWidget {
 }
 
 class _otpVerifyState extends State<otpVerify> {
-  TextEditingController _phone = TextEditingController();
-  TextEditingController _otp = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
+  final TextEditingController _otp = TextEditingController();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -83,7 +83,7 @@ class _otpVerifyState extends State<otpVerify> {
                         }
 
                         return null;
-                      }, 
+                      },
                     ),
                   ),
                   Row(
@@ -101,7 +101,7 @@ class _otpVerifyState extends State<otpVerify> {
                           ),
                           onPressed: () {
                             if (_formkey.currentState!.validate()) {
-                             verifyUser();
+                              verifyUser();
 
                               print("Successful");
                             } else {
