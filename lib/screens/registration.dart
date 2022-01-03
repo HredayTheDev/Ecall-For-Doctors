@@ -264,7 +264,7 @@ class _RegistrationState extends State<Registration> {
       'phone': _phone.text,
       'password': _password.text,
       'usertype': "1",
-      'department': _mySelection
+      'department': "25"
     };
 
     var datas = await http.post(Uri.parse(apiUrl), body: mapeddate);
