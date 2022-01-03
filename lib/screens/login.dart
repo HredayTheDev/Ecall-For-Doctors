@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:ecalldoc/screens/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:ecalldoc/widget/design.dart';
-import 'package:ecalldoc/screens/dashboard.dart';
+import 'package:ecalldoc/screens/doctor_profile_update.dart';
 
 import 'package:http/http.dart' as http;
+
+import 'doctor_personal_info.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -100,9 +104,21 @@ class _LoginState extends State<Login> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 23),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formkey.currentState!.validate()) {
+                              var userId;
+                              var data = await loginUser();
+                              for (int i = 0; i < data.length; i++) {
+                                userId = data[i]["DocNurID"];
+                              }
                               loginUser();
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DoctorProfileUpdate(
+                                            id: userId,
+                                          )));
 
                               print("Successful");
                             } else {
@@ -158,7 +174,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future loginUser() async {
+  Future<List> loginUser() async {
     var apiUrl = "http://192.168.0.121:9010/api/login";
 
     Map mapeddate = {
@@ -172,8 +188,10 @@ class _LoginState extends State<Login> {
     var status = datas.statusCode;
 
     if (status == 200) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Dashboard()));
+      print(datas.body);
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => Dashboard()));
     }
+    return jsonDecode(datas.body);
   }
 }
