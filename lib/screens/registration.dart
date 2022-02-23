@@ -8,12 +8,14 @@ import 'package:http/http.dart' as http;
 import 'package:ecalldoc/widget/design.dart';
 
 class Registration extends StatefulWidget {
+  const Registration({Key? key}) : super(key: key);
+
   @override
   _RegistrationState createState() => _RegistrationState();
 }
 
 class _RegistrationState extends State<Registration> {
-  final TextEditingController _name = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
 
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _password = TextEditingController();
@@ -40,7 +42,7 @@ class _RegistrationState extends State<Registration> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.cyan,
+         backgroundColor: Colors.teal[900],
           title: const Text(
             'Doctor And Nurse',
             style: TextStyle(color: Colors.white),
@@ -57,7 +59,7 @@ class _RegistrationState extends State<Registration> {
                 children: [
                   const CircleAvatar(
                     backgroundImage: NetworkImage(
-                        'https://toppng.com/uploads/preview/logo-doctors-logo-black-and-white-vector-11563999612kv1q84czrt.png'),
+                        'https://img.freepik.com/free-photo/portrait-smiling-handsome-male-doctor-man_171337-5055.jpg?size=626&ext=jpg'),
                     radius: 70,
                   ),
                   const SizedBox(
@@ -67,13 +69,13 @@ class _RegistrationState extends State<Registration> {
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 18, right: 18),
                     child: TextFormField(
-                      controller: _name,
+                      controller: _userName,
                       keyboardType: TextInputType.text,
                       decoration:
-                          buildInputDecoration(Icons.person, "Full Name"),
+                          buildInputDecoration(Icons.person, "Username"),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter name";
+                          return "Please enter your username";
                         }
                         return null;
                       },
@@ -110,7 +112,7 @@ class _RegistrationState extends State<Registration> {
                         const EdgeInsets.only(bottom: 15, left: 18, right: 18),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.purple, width: 2)),
+                        border: Border.all(color:const Color.fromARGB(250, 50, 30, 60), width: 2)),
                     child: Container(
                       alignment: Alignment.topLeft,
                       child: DropdownButton(
@@ -141,6 +143,7 @@ class _RegistrationState extends State<Registration> {
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 18, right: 18),
                     child: TextFormField(
+
                       controller: _password,
                       keyboardType: TextInputType.text,
                       decoration: buildInputDecoration(Icons.lock, "Password"),
@@ -163,6 +166,7 @@ class _RegistrationState extends State<Registration> {
                       controller: _confirmpassword,
                       obscureText: true,
                       keyboardType: TextInputType.text,
+                      
                       decoration:
                           buildInputDecoration(Icons.lock, "Confirm Password"),
                       validator: (value) {
@@ -200,8 +204,8 @@ class _RegistrationState extends State<Registration> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.deepOrange,
-                              //  fixedSize: const Size(50, 100),
+                              primary: Colors.teal[900],
+                               fixedSize: const Size(40, 40),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50))),
                         ),
@@ -214,7 +218,7 @@ class _RegistrationState extends State<Registration> {
                       const Text(
                         "Already Registered?",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: Color.fromARGB(250, 20, 20, 260),
                             fontSize: 18,
                             fontWeight: FontWeight.bold),
                       ),
@@ -230,7 +234,7 @@ class _RegistrationState extends State<Registration> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
-                                color: Colors.red,
+                                color: Colors.deepOrange,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -260,7 +264,7 @@ class _RegistrationState extends State<Registration> {
     var apiUrl = "http://192.168.0.121:9010/api/signup";
 
     Map mapeddate = {
-      'username': _name.text,
+      'username': _userName.text,
       'phone': _phone.text,
       'password': _password.text,
       'usertype': "1",

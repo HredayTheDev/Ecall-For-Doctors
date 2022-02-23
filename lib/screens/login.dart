@@ -1,13 +1,11 @@
 import 'dart:convert';
 
+import 'package:ecalldoc/screens/doctor_profile_card.dart';
 import 'package:ecalldoc/screens/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:ecalldoc/widget/design.dart';
-import 'package:ecalldoc/screens/doctor_profile_update.dart';
 
 import 'package:http/http.dart' as http;
-
-import 'doctor_personal_info.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -33,7 +31,7 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.cyan,
+          backgroundColor: Colors.teal[900],
           title: const Text(
             'Doctor And Nurse',
             style: TextStyle(color: Colors.white),
@@ -50,7 +48,7 @@ class _LoginState extends State<Login> {
                 children: [
                   const CircleAvatar(
                     backgroundImage: NetworkImage(
-                        'https://toppng.com/uploads/preview/logo-doctors-logo-black-and-white-vector-11563999612kv1q84czrt.png'),
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkCjzUD4n5u893ZwR3x8q9d4DVGyNCE_b4hw&usqp=CAU'),
                     radius: 70,
                   ),
                   const SizedBox(
@@ -116,8 +114,8 @@ class _LoginState extends State<Login> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => DoctorProfileUpdate(
-                                            id: userId,
+                                      builder: (context) => DoctorProfileCard(
+                                            docNurId: userId,
                                           )));
 
                               print("Successful");
@@ -126,8 +124,8 @@ class _LoginState extends State<Login> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.deepOrange,
-                              //  fixedSize: const Size(50, 100),
+                              primary: Colors.teal[900],
+                               fixedSize: const Size(40, 40),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50))),
                         ),
@@ -189,8 +187,6 @@ class _LoginState extends State<Login> {
 
     if (status == 200) {
       print(datas.body);
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => Dashboard()));
     }
     return jsonDecode(datas.body);
   }

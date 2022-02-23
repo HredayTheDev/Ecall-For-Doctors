@@ -1,27 +1,27 @@
-
+import 'package:ecalldoc/models/chamber_info.dart';
 import 'package:ecalldoc/models/educational_info.dart';
 import 'package:ecalldoc/models/experience_info.dart';
 import 'package:ecalldoc/models/personal_info.dart';
 import 'package:flutter/material.dart';
-class DoctorProfileDetails extends StatefulWidget {
 
-  String id;
-  DoctorProfileDetails({required this.id});
+class DoctorProfileDetails extends StatefulWidget {
+  String docNurId;
+  DoctorProfileDetails({required this.docNurId});
 
   // This widget is the root of your application.
   @override
   _DoctorProfileDetailsState createState() => _DoctorProfileDetailsState();
 }
 
-class _DoctorProfileDetailsState extends State<DoctorProfileDetails> with TickerProviderStateMixin {
+class _DoctorProfileDetailsState extends State<DoctorProfileDetails>
+    with TickerProviderStateMixin {
   late TabController _tabController;
- 
 
   int _currentIndex = 0;
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
 
     super.initState();
   }
@@ -31,52 +31,68 @@ class _DoctorProfileDetailsState extends State<DoctorProfileDetails> with Ticker
     return (Scaffold(
       appBar: AppBar(
         title: Text(
-          "This is Appbar",
+          "Doctor Profile",
           style:
               TextStyle(color: Colors.blue[150], fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.purple[200],
+        backgroundColor: Colors.teal[900],
+        toolbarHeight: 35,
+        
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(
               icon: Icon(
                 Icons.person,
-                color: Colors.amber[200],
+                color: Colors.amberAccent,
               ),
               child: Text(
                 "Personal Info",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                    color: Colors.black),
+                    fontSize: 10,
+                    color: Colors.white),
               ),
             ),
             Tab(
               icon: Icon(
                 Icons.cast_for_education,
-                color: Colors.amber[200],
+                color: Colors.amberAccent,
               ),
               child: Text(
                 "Educational Info",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                    color: Colors.black),
+                    fontSize: 10,
+                    color: Colors.white),
               ),
             ),
             Tab(
               icon: Icon(
                 Icons.info,
-                color: Colors.amber[200],
+                color: Colors.amberAccent,
               ),
               child: Text(
-                "ExperienceInfo",
+                "Experience Info",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                    color: Colors.black),
+                    fontSize: 10,
+                    color: Colors.white),
+              ),
+            ),
+
+             Tab(
+              icon: Icon(
+                Icons.info,
+                color: Colors.amberAccent,
+              ),
+              child: Text(
+                "Chembar Info",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                    color: Colors.white),
               ),
             )
           ],
@@ -85,9 +101,20 @@ class _DoctorProfileDetailsState extends State<DoctorProfileDetails> with Ticker
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(child: Personal()),
-          Center(child: Education()),
-          Center(child: Experience()),
+          Center(
+            child: Person(
+              docNurId: widget.docNurId,
+            ),
+          ),
+          Education(
+            docNurId: widget.docNurId,
+          ),
+          Experience(
+            docNurId: widget.docNurId,
+          ),
+            Chamber(
+            id: widget.docNurId,
+          ),
         ],
       ),
     ));

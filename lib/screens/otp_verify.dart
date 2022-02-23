@@ -28,9 +28,9 @@ class _otpVerifyState extends State<otpVerify> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.cyan,
+          backgroundColor: Colors.teal[900],
           title: const Text(
-            'Doctor And Nurse',
+            'Otp Verify',
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -93,7 +93,7 @@ class _otpVerifyState extends State<otpVerify> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: ElevatedButton(
                           child: const Text(
-                            'Login',
+                            'Verify',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -109,8 +109,8 @@ class _otpVerifyState extends State<otpVerify> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.deepOrange,
-                              //  fixedSize: const Size(50, 100),
+                              primary: Colors.teal[900],
+                               fixedSize: const Size(40, 40),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50))),
                         ),
