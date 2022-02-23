@@ -1,21 +1,23 @@
-import 'package:ecalldoc/screens/doctor_personal_info.dart';
-import 'package:ecalldoc/screens/doctor_profile_details.dart';
+//import 'package:ecalldoc/screens/doctor_personal_info.dart';
+import 'package:ecalldoc/models/personal_info.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:ecalldoc/widget/design.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
-class DoctorProfileUpdate extends StatefulWidget {
+class DoctorPersonalInfoUpdate extends StatefulWidget {
   String id;
-  DoctorProfileUpdate({Key? key, required this.id}) : super(key: key);
+  DoctorPersonalInfoUpdate({Key? key, required this.id}) : super(key: key);
 
   @override
-  _DoctorProfileUpdateState createState() => _DoctorProfileUpdateState();
+  _DoctorPersonalInfoUpdateState createState() =>
+      _DoctorPersonalInfoUpdateState();
 }
 
-class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
+class _DoctorPersonalInfoUpdateState extends State<DoctorPersonalInfoUpdate> {
   final TextEditingController _registrationNumber = TextEditingController();
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
@@ -27,12 +29,14 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
   final TextEditingController _age = TextEditingController();
   final TextEditingController _bloodGroup = TextEditingController();
   final TextEditingController _nid = TextEditingController();
-  final TextEditingController _photo = TextEditingController();
+  // final TextEditingController _photo = TextEditingController();
   final TextEditingController _address = TextEditingController();
 
   final TextEditingController _password = TextEditingController();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
+  //  final TextEditingController _cepController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +49,7 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
         ),
       ),
       child: Scaffold(
-        //backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.cyan,
-          title: const Text(
-            'Doctor Profile Update',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          elevation: 0,
-        ),
+        resizeToAvoidBottomInset: false,
         body: Center(
           child: SingleChildScrollView(
             child: Form(
@@ -69,30 +64,37 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      scrollPadding: EdgeInsets.only(bottom: 40),
+                      maxLines: 1,
+                      autofocus: true,
+                      //  controller: _cepController,
+
                       controller: _registrationNumber,
                       keyboardType: TextInputType.number,
                       decoration: buildInputDecoration(
-                          Icons.app_registration,
-                          "Registration Number"),
+                          Icons.app_registration, "Registration Number"),
+
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter your Registration Number";
                         }
-                      
+
                         return null;
                       },
-                      onSaved: (phone) {},
+                      onSaved: (name) {},
+                      // onSaved: (phone) {},
                     ),
                   ),
-                 const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _firstName,
                       keyboardType: TextInputType.text,
-                      decoration:
-                          buildInputDecoration(Icons.assignment_ind, "First Name"),
+                      decoration: buildInputDecoration(
+                          Icons.assignment_ind, "First Name"),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter first name";
@@ -100,17 +102,19 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _lastName,
                       keyboardType: TextInputType.text,
-                      decoration:
-                          buildInputDecoration(Icons.assignment_ind_outlined , "Last Name"),
+                      decoration: buildInputDecoration(
+                          Icons.assignment_ind_outlined, "Last Name"),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter last name";
@@ -118,13 +122,15 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _userName,
                       keyboardType: TextInputType.text,
                       decoration:
@@ -136,15 +142,15 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
                       controller: _phone,
+                      maxLines: 1,
                       keyboardType: TextInputType.number,
                       decoration: buildInputDecoration(Icons.phone, "Phone"),
                       validator: (value) {
@@ -154,13 +160,15 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _gender,
                       keyboardType: TextInputType.text,
                       decoration: buildInputDecoration(Icons.add, "Gender"),
@@ -171,15 +179,17 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
                       controller: _dateOfBirth,
-                         keyboardType: TextInputType.number,
+                      autofocus: true,
+                      maxLines: 1,
+                      keyboardType: TextInputType.number,
                       decoration: buildInputDecoration(
                           Icons.date_range, "Date Of Birth"),
                       validator: (value) {
@@ -189,15 +199,17 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _age,
-                        keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       decoration:
                           buildInputDecoration(Icons.calendar_today, "Age"),
                       validator: (value) {
@@ -207,13 +219,15 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _bloodGroup,
                       keyboardType: TextInputType.text,
                       decoration:
@@ -225,16 +239,18 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _nid,
-                         keyboardType: TextInputType.number,
-                      decoration: buildInputDecoration(Icons.person, "Nid"),
+                      keyboardType: TextInputType.number,
+                      decoration: buildInputDecoration(Icons.person, "NID"),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter your NID";
@@ -242,33 +258,19 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
-                      controller: _photo,
-                      keyboardType: TextInputType.text,
-                      decoration: buildInputDecoration(Icons.add_a_photo, "Photo"),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter your Photo";
-                        }
-
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 15,),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(bottom: 15, left: 15, right: 15),
-                    child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _address,
                       keyboardType: TextInputType.text,
-                      decoration: buildInputDecoration(Icons.add_location , "Address"),
+                      decoration:
+                          buildInputDecoration(Icons.add_location, "Address"),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter your Address";
@@ -276,13 +278,15 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-                  const SizedBox(height: 15,),
                   Padding(
                     padding:
                         const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                     child: TextFormField(
+                      autofocus: true,
+                      maxLines: 1,
                       controller: _password,
                       keyboardType: TextInputType.text,
                       decoration: buildInputDecoration(Icons.lock, "Password"),
@@ -293,42 +297,61 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
 
                         return null;
                       },
+                      onSaved: (name) {},
                     ),
                   ),
-      
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: ElevatedButton(
-                          child: const Text(
-                            'Update',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 23),
-                          ),
-                          onPressed: () {
-                            if (_formkey.currentState!.validate()) {
-                              // ignore: avoid_print
-                              print(widget.id);
-                              verifyUser();
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: ElevatedButton(
+                            child: const Text(
+                              'Update',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 23),
+                            ),
+                            onPressed: () {
+                              if (_formkey.currentState!.validate()) {
+                                // ignore: avoid_print
+                                //  print(widget.id);
+                                // print("hi");
 
-                              // print("Successful");
-                            } else {
-                              // ignore: avoid_print
-                              print("Unsuccessfull");
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.deepOrange,
-                              //  fixedSize: const Size(50, 100),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
+                                Fluttertoast.showToast(
+                                    msg: 'Info Has Been Updated',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.teal[900],
+                                    textColor: Colors.black);
+
+                                // ScaffoldMessenger.of(context)
+                                //     .showSnackBar(const SnackBar(
+                                //   content: Center(
+                                //       child: Text("Info Has Been Updated")),
+                                // ));
+
+                                verifyUser();
+
+                                // print("Successful");
+                              } else {
+                                // ignore: avoid_print
+                                print("Unsuccessfull");
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.teal[900],
+                                fixedSize: const Size(40, 40),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50))),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -354,7 +377,7 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
       'Age': _age.text,
       'BloodGroup': _bloodGroup.text,
       'NID': _nid.text,
-      'Photo': _photo.text,
+      // 'Photo': _photo.text,
       'Address': _address.text,
       'Password': _password.text,
     };
@@ -369,8 +392,13 @@ class _DoctorProfileUpdateState extends State<DoctorProfileUpdate> {
     if (status == 200) {
       // ignore: avoid_print
       print(datas.body);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) =>  DoctorProfileDetails(id: widget.id,)));
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Person(
+                    docNurId: widget.id,
+                  )));
     }
   }
 }

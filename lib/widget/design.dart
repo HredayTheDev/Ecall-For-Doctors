@@ -11,19 +11,19 @@ InputDecoration buildInputDecoration(IconData icons, String hinttext) {
         const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(25.0),
-      borderSide: const BorderSide(color: Colors.deepOrange, width: 2),
+      borderSide:  const BorderSide(color: Colors.black, width: 2),
     ),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(25.0),
       borderSide: const BorderSide(
-        color: Colors.purple,
+        color: Color.fromARGB(250, 50, 30, 60),
         width: 2,
       ),
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(25.0),
       borderSide: const BorderSide(
-        color: Colors.purple,
+       color: Color.fromARGB(250, 50, 30, 60),
         width: 2,
       ),
     ),
